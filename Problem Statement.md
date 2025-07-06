@@ -1,0 +1,1 @@
+Floods caused by excessive water in dams pose a serious threat to life and property. Manual monitoring of dam water levels is prone to delay and human error. Therefore, an automatic real-time system is needed to sense water levels and issue alerts when dangerous levels are reached.
