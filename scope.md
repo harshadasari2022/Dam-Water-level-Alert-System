@@ -1,0 +1,1 @@
+The Dam Water Level Alert System monitors water levels in real time using an ultrasonic sensor. It alerts users through LEDs, a buzzer, and an LCD display when water exceeds a set threshold. This low-cost, Arduino-based system ensures early warning and can be extended for remote monitoring and flood prevention.
