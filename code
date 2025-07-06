@@ -1,0 +1,74 @@
+#include <LiquidCrystal.h>
+
+const int trigPin = 9;
+const int echoPin = 10;
+const int buzzerPin = 8;
+const int redLedPin = 7;
+const int greenLedPin = 6;
+
+LiquidCrystal lcd(12, 11, 5, 4, 3, 2);
+
+const float WATER_LEVEL_THRESHOLD_CM = 90.0;
+
+void setup() {
+  Serial.begin(9600);
+  pinMode(trigPin, OUTPUT);
+  pinMode(echoPin, INPUT);
+  pinMode(buzzerPin, OUTPUT);
+  pinMode(redLedPin, OUTPUT);
+  pinMode(greenLedPin, OUTPUT);
+  lcd.begin(16, 2);
+  lcd.setCursor(0, 0);
+  lcd.print("Dam Water Level");
+  lcd.setCursor(0, 1);
+  lcd.print("Alert System");
+  delay(2000);
+  lcd.clear();
+  lcd.setCursor(0, 0);
+  lcd.print("Project done by");
+  lcd.setCursor(0, 1);
+  lcd.print("DASARI HARSHA");
+  delay(2000);
+  lcd.clear();
+}
+
+void loop() {
+  digitalWrite(trigPin, LOW);
+  delayMicroseconds(2);
+  digitalWrite(trigPin, HIGH);
+  delayMicroseconds(10);
+  digitalWrite(trigPin, LOW);
+
+  long duration = pulseIn(echoPin, HIGH);
+  float distanceCm = duration * 0.0343 / 2;
+
+  lcd.clear();
+
+  if (distanceCm > WATER_LEVEL_THRESHOLD_CM) {
+    digitalWrite(redLedPin, HIGH);
+    digitalWrite(greenLedPin, LOW);
+    digitalWrite(buzzerPin, HIGH);
+    lcd.setCursor(0, 0);
+    lcd.print("Water Level:HIGH");
+    lcd.setCursor(0, 1);
+    lcd.print("Level: ");
+    lcd.print(distanceCm);
+    lcd.print(" cm");
+  } else {
+    digitalWrite(redLedPin, LOW);
+    digitalWrite(greenLedPin, HIGH);
+    digitalWrite(buzzerPin, LOW);
+    lcd.setCursor(0, 0);
+    lcd.print("Water Level: OK");
+    lcd.setCursor(0, 1);
+    lcd.print("Level: ");
+    lcd.print(distanceCm);
+    lcd.print(" cm");
+  }
+
+  Serial.print("Distance: ");
+  Serial.print(distanceCm);
+  Serial.println(" cm");
+
+  delay(1000);
+}
